@@ -90,7 +90,6 @@ sub main {
   my $vcf_path = $opts->{'input'};
   my $sample_name = $opts->{'sample'};
   my $analysis = $opts->{'analysis'};
-  my $project_id = $opts->{'project_id'};
 
   #print "vcf_path=$vcf_path\n";
   my $json_string = get_json_from_vcf($opts);
@@ -134,7 +133,6 @@ sub get_json_from_vcf {
   my $vcf_path = $opts->{'input'};
   my $sample_name = $opts->{'sample'};
   my $analysis = $opts->{'analysis'};
-  my $project_id = $opts->{'project_id'};
 
   if (defined $vcf_path && -e $vcf_path) {
     my $variant_data = parse_vcf($opts, $vcf_path);
@@ -338,7 +336,6 @@ sub option_builder {
   my $result = &GetOptions (
                             'h|help' => \$opts{'h'},
                             'v|version' => \$opts{'v'},
-                            'p|project=s' => \$opts{'project'},
                             'a|analysis=s' => \$opts{'analysis'},
                             'i|input=s' => \$opts{'input'},
                             'o|output=s' => \$opts{'output'},
@@ -373,11 +370,10 @@ sub option_builder {
 sub validateInput {
   my $opts = shift;
 
-  #Need project, sample and input
+  #Need sample and input
 
-  unless (defined $opts->{'sample'} && defined $opts->{'project'} &&
-          defined $opts->{'input'}) {
-    pod2usage('Please specify a project, sample, analysis and input vcf file');
+  unless (defined $opts->{'sample'} && defined $opts->{'input'}) {
+    pod2usage('Please specify sample, analysis and input vcf file');
   }
 
   unless (-e $opts->{'input'}) {
@@ -417,15 +413,13 @@ convert_vcfToJson.pl - Parses pindel and caveman annotated vcf files and creates
 
 =head1 SYNOPSIS
 
-convert_vcfToJson.pl [-h] [-v] [-p] <PROJECT_ID> [-s] <SAMPLE_NAME> [-a] <ANALYSIS> [-i] </PATH/TO/VCF_FILE> [-o] </PATH/TO/OUTPUT/DIRECTORY>
+convert_vcfToJson.pl [-h] [-v] [-s] <SAMPLE_NAME> [-a] <ANALYSIS> [-i] </PATH/TO/VCF_FILE> [-o] </PATH/TO/OUTPUT/DIRECTORY>
 
  General Options:
 
     --help              (-h)    Brief documentation
 
     --version           (-v)    Print version and exit
-
-    --project           (-p)   Project id
 
     --analysis          (-a)   Analysis (caveman_c, caveman, pindel)
 
@@ -441,6 +435,6 @@ convert_vcfToJson.pl [-h] [-v] [-p] <PROJECT_ID> [-s] <SAMPLE_NAME> [-a] <ANALYS
 
  Examples:
 
-    convert_vcfToJson.pl -db live -p 1234 -s PD12345 -i /my/path/to/sample.vcf -o /my/path/to/output/file.json
+    convert_vcfToJson.pl -s PD12345 -i /my/path/to/sample.vcf -o /my/path/to/output/file.json
 
 =cut
