@@ -1,5 +1,5 @@
 ##########LICENCE##########
-# Copyright (c) 2014-2019 Genome Research Ltd.
+# Copyright (c) 2019 Genome Research Ltd.
 #
 # Author: Cancer Genome Project cgpit@sanger.ac.uk
 #
@@ -20,9 +20,6 @@
 ##########LICENCE##########
 
 # this is a catch all to ensure all modules do compile
-# added as lots of 'use' functionality is dynamic in pipeline
-# and need to be sure that all modules compile.
-# simple 'perl -c' is unlikely to work on head scripts any more.
 
 use strict;
 use Data::Dumper;
