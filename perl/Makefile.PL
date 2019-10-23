@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 ##########LICENCE##########
-# Copyright (c) 2014-2019 Genome Research Ltd.
+# Copyright (c) 2019 Genome Research Ltd.
 #
 # Author: Cancer Genome Project cgpit@sanger.ac.uk
 #
@@ -33,5 +33,8 @@ WriteMakefile(
   PREREQ_PM     => {
                     'Const::Fast' => '0.014',
                     'JSON' =>  2.90,
+                    # below are only required for testing the module
+                    'Try::Tiny' => 0.30,
+                    'IPC::System::Simple' => 1.25,
                    }
 );

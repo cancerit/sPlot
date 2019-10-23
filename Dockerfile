@@ -10,6 +10,7 @@ RUN apt-get -yq update
 RUN apt-get install -yq --no-install-recommends\
   locales\
   libperlio-gzip-perl \
+  cpanminus \
   build-essential\
   apt-transport-https\
   curl\

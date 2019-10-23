@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##########LICENCE##########
-# Copyright (c) 2014-2019 Genome Research Ltd.
+# Copyright (c) 2019 Genome Research Ltd.
 #
 # Author: Cancer Genome Project cgpit@sanger.ac.uk
 #
@@ -48,16 +48,6 @@ echo $INST_PATH
 # get current directory
 INIT_DIR=`pwd`
 
-CPU=`grep -c ^processor /proc/cpuinfo`
-if [ $? -eq 0 ]; then
-  if [ "$CPU" -gt "6" ]; then
-    CPU=6
-  fi
-else
-  CPU=1
-fi
-echo "Max compilation CPUs set to $CPU"
-
 SETUP_DIR=$INIT_DIR/install_tmp
 mkdir -p $INST_PATH/bin $SETUP_DIR
 cd $SETUP_DIR
@@ -70,16 +60,20 @@ export MANPATH=`echo $INST_PATH/man:$BB_INST/man:$INST_PATH/share/man:$MANPATH |
 export PERL5LIB=`echo $INST_PATH/lib/perl5:$PERL5LIB | perl -pe 's/:\$//;'`
 set -u
 
-## INSTALL CPANMINUS
-set -eux
-curl -sSL https://cpanmin.us/ > $SETUP_DIR/cpanm
-perl $SETUP_DIR/cpanm --no-wget --no-interactive --notest --mirror http://cpan.metacpan.org -l $INST_PATH App::cpanminus
-rm -f $SETUP_DIR/cpanm
+# if cpanm is not installed
+if [ -z $(which cpanm) ]; then
+  echo "Can't find cpanm, trying to install.."
+  ## INSTALL CPANMINUS
+  set -eux
+  curl -sSL https://cpanmin.us/ > $SETUP_DIR/cpanm
+  perl $SETUP_DIR/cpanm --no-wget --no-interactive --notest --mirror http://cpan.metacpan.org -l $INST_PATH App::cpanminus
+  rm -f $SETUP_DIR/cpanm
+fi
 CPANM=`which cpanm`
 
 # Install sPlot
-$CPANM --no-wget --no-interactive --notest --mirror http://cpan.metacpan.org --notest -l $INST_PATH --installdeps $SCRIPT_PATH/perl/
-$CPANM --no-wget --no-interactive --notest --mirror http://cpan.metacpan.org --notest -l $INST_PATH $SCRIPT_PATH/perl/
+$CPANM --no-wget --no-interactive --mirror http://cpan.metacpan.org --notest -l $INST_PATH --installdeps $SCRIPT_PATH/perl/
+$CPANM --no-wget --no-interactive --mirror http://cpan.metacpan.org -l $INST_PATH $SCRIPT_PATH/perl/
 
 cd $HOME
 rm -rf $SETUP_DIR
