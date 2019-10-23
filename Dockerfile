@@ -27,11 +27,8 @@ ENV LANG en_US.UTF-8
 
 RUN mkdir -p $OPT/bin
 
-ADD build/opt-build.sh build/
-RUN bash build/opt-build.sh $OPT
-
 COPY . .
-RUN bash build/opt-build-local.sh $OPT
+RUN bash setup.sh $OPT
 
 FROM  ubuntu:16.04
 
