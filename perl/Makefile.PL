@@ -32,9 +32,11 @@ WriteMakefile(
 
   PREREQ_PM     => {
                     'Const::Fast' => '0.014',
-                    'JSON' =>  2.90,
-                    # below are only required for testing the module
+                    'JSON' =>  2.90
+                   },
+
+  TEST_REQUIRES  => {
                     'Try::Tiny' => 0.30,
-                    'IPC::System::Simple' => 1.25,
-                   }
+                    'IPC::System::Simple' => 1.25
+  }
 );
