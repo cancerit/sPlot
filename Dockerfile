@@ -10,8 +10,6 @@ RUN apt-get -yq update
 RUN apt-get install -yq --no-install-recommends\
   locales\
   libperlio-gzip-perl \
-  libjson-perl \
-  libjson-xs-perl \
   cpanminus \
   build-essential\
   apt-transport-https\
@@ -43,7 +41,6 @@ LABEL maintainer="cgphelp@sanger.ac.uk"\
 RUN apt-get -yq update
 RUN apt-get install -yq --no-install-recommends \
 libperlio-gzip-perl \
-libjson-perl\
 libjson-xs-perl \
 unattended-upgrades && \
 unattended-upgrade -d -v && \
