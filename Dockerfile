@@ -35,12 +35,13 @@ FROM  ubuntu:16.04
 
 LABEL maintainer="cgphelp@sanger.ac.uk"\
       uk.ac.sanger.cgp="Cancer, Ageing and Somatic Mutation, Wellcome Sanger Institute" \
-      version="1.3.0" \
+      version="1.3.1" \
       description="sPlot"
 
 RUN apt-get -yq update
 RUN apt-get install -yq --no-install-recommends \
 libperlio-gzip-perl \
+libjson-xs-perl \
 unattended-upgrades && \
 unattended-upgrade -d -v && \
 apt-get remove -yq unattended-upgrades && \

@@ -258,7 +258,8 @@ sub convert_to_json_by_analysis {
   $sample_mutations->{'mutation_counts'} = \%mutation_counts;
   $sample_mutations->{'bp_change_counts'} = \%bp_change_counts;
 
-  my $sample_json = encode_json $sample_mutations;
+  my $json = JSON->new->canonical(1);
+  my $sample_json = $json->encode($sample_mutations);
   return $sample_json;
 }
 
